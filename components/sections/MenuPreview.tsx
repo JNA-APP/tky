@@ -2,17 +2,18 @@ import Link from "next/link";
 
 import { AccordionGroup, AccordionItem } from "@/components/ui/Accordion";
 import { menuSections } from "@/lib/menu-data";
+import type { HomePageContent } from "@/lib/page-content";
 import { signatureCategories } from "@/lib/site";
 
-export function MenuPreview() {
+export function MenuPreview({ content }: { content: HomePageContent["menuPreview"] }) {
   return (
     <section className="section-space">
       <div className="container-shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-6">
-          <span className="eyebrow">Signature menu</span>
-          <h2 className="section-title">Sushi precision, cocktail drama, and late-night share plates.</h2>
+          <span className="eyebrow">{content.eyebrow}</span>
+          <h2 className="section-title">{content.title}</h2>
           <p className="section-copy">
-            Browse categories below, then jump into the full menu when something catches your eye.
+            {content.description}
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {signatureCategories.map((item) => (
@@ -22,8 +23,8 @@ export function MenuPreview() {
               </div>
             ))}
           </div>
-          <Link href="/menu" className="btn-secondary">
-            View Full Menu
+          <Link href={content.button.href} className="btn-secondary">
+            {content.button.label}
           </Link>
         </div>
 

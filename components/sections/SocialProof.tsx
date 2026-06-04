@@ -1,17 +1,18 @@
 import { testimonials } from "@/lib/site";
+import type { HomePageContent } from "@/lib/page-content";
 
-export function SocialProof() {
+export function SocialProof({ content }: { content: HomePageContent["socialProof"] }) {
   return (
     <section className="section-space">
       <div className="container-shell border-y border-white/8 py-12">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div className="space-y-4">
-            <span className="eyebrow">Memorable moments, lasting impressions</span>
+            <span className="eyebrow">{content.eyebrow}</span>
             <h2 className="section-title max-w-3xl">
-              The ambiance is unforgettable—and so is every bite.
+              {content.title}
             </h2>
             <p className="section-copy">
-              Our guests don’t just dine—they experience. See why people keep talking about every detail, from the atmosphere to the service and beyond.
+              {content.description}
             </p>
           </div>
 

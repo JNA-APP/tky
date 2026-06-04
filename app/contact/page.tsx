@@ -4,14 +4,16 @@ import { StructuredData } from "@/components/seo/StructuredData";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { BookingButton } from "@/components/ui/ReservationModal";
 import { createPageMetadata } from "@/lib/metadata";
-import { eventOccasions, pageOgImages, siteConfig } from "@/lib/site";
+import { getPageContent } from "@/lib/page-content";
+import { pageOgImages, siteConfig } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
+
+const pageContent = getPageContent("contact");
 
 export const metadata = createPageMetadata({
   path: "/contact",
-  title: "Contact | Tokyo Club Sushi Speakeasy",
-  description:
-    "Get in touch with Tokyo Club Sushi Speakeasy. Reserve a table, plan a private event, or reach our team at 1000 Collins Ave, South Beach.",
+  title: pageContent.seo.title,
+  description: pageContent.seo.description,
   image: pageOgImages.contact,
 });
 
@@ -27,10 +29,10 @@ export default function ContactPage() {
       {/* ── Events banner ── */}
       <section className="relative overflow-hidden">
         <Image
-          src="/pictures/09-gyoza-with-cocktail-and-salad-table-setting.jpg"
-          alt="Moody table setting with cocktails and Japanese dishes at Tokyo Club Sushi Speakeasy"
-          width={1365}
-          height={2048}
+          src={pageContent.hero.image.src}
+          alt={pageContent.hero.image.alt}
+          width={pageContent.hero.image.width ?? 1365}
+          height={pageContent.hero.image.height ?? 2048}
           className="absolute inset-0 h-full w-full object-cover"
           priority
         />
@@ -40,20 +42,19 @@ export default function ContactPage() {
           <div className="container-shell">
             <Reveal>
               <div className="mx-auto max-w-3xl text-center">
-                <span className="eyebrow justify-center">Private events & celebrations</span>
+                <span className="eyebrow justify-center">{pageContent.hero.eyebrow}</span>
                 <h1 className="section-title mt-6">
-                  The venue already feels like the event.
+                  {pageContent.hero.title}
                 </h1>
                 <p className="section-copy mx-auto mt-6 text-center">
-                  Birthdays, date nights, group dinners — Tokyo Club Sushi Speakeasy is built
-                  for nights that turn into stories.
+                  {pageContent.hero.description}
                 </p>
               </div>
             </Reveal>
 
             <Reveal delay={80}>
               <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
-                {eventOccasions.map((occasion, i) => (
+                {pageContent.occasions.map((occasion, i) => (
                   <div
                     key={occasion.title}
                     className={`text-center ${i > 0 ? "md:border-l md:border-white/12 md:pl-8" : ""}`}
@@ -72,10 +73,13 @@ export default function ContactPage() {
             <Reveal delay={120}>
               <div className="mx-auto mt-14 flex max-w-md flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
                 <BookingButton className="btn-primary">
-                  Reserve a Table
+                  {pageContent.hero.primaryButtonLabel ?? "Reserve a Table"}
                 </BookingButton>
-                <a href={siteConfig.phoneHref} className="btn-secondary backdrop-blur-sm">
-                  Call to Plan
+                <a
+                  href={pageContent.hero.secondaryButton?.href ?? siteConfig.phoneHref}
+                  className="btn-secondary backdrop-blur-sm"
+                >
+                  {pageContent.hero.secondaryButton?.label ?? "Call to Plan"}
                 </a>
               </div>
             </Reveal>
@@ -88,13 +92,12 @@ export default function ContactPage() {
         <div className="container-shell">
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
-              <span className="eyebrow justify-center">Get in touch</span>
+              <span className="eyebrow justify-center">{pageContent.formIntro.eyebrow}</span>
               <h2 className="section-title mt-6 text-[clamp(2rem,5vw,3.5rem)]">
-                Send us a message
+                {pageContent.formIntro.title}
               </h2>
               <p className="section-copy mx-auto mt-5 text-center">
-                Questions about reservations, events, or anything else — we&apos;re
-                here to help make your night happen.
+                {pageContent.formIntro.description}
               </p>
             </div>
           </Reveal>
@@ -106,7 +109,7 @@ export default function ContactPage() {
               <aside className="space-y-12 lg:pt-2">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-(--accent-gold)">
-                    Visit us
+                    {pageContent.sidebar.visitEyebrow}
                   </p>
                   <div className="mt-4 space-y-2 text-stone-300">
                     <p>{siteConfig.address}</p>
@@ -129,11 +132,10 @@ export default function ContactPage() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-(--accent-gold)">
-                    Prefer to call?
+                    {pageContent.sidebar.callEyebrow}
                   </p>
                   <p className="mt-3 text-sm leading-7 text-stone-400">
-                    For group bookings and same-day plans, calling is the
-                    fastest way to get everything sorted.
+                    {pageContent.sidebar.callDescription}
                   </p>
                   <a
                     href={siteConfig.phoneHref}
@@ -147,17 +149,16 @@ export default function ContactPage() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-(--accent-gold)">
-                    Large parties & private events
+                    {pageContent.sidebar.eventsEyebrow}
                   </p>
                   <p className="mt-3 text-sm leading-7 text-stone-400">
-                    For groups of 15+ guests or private event inquiries, reach
-                    our events team directly.
+                    {pageContent.sidebar.eventsDescription}
                   </p>
                   <a
-                    href="mailto:events@fairwindhotelmiami.com"
+                    href={`mailto:${pageContent.sidebar.eventsEmail}`}
                     className="mt-3 inline-block text-sm font-medium text-stone-400 underline decoration-stone-600 underline-offset-4 hover:text-white hover:decoration-white/40"
                   >
-                    events@fairwindhotelmiami.com
+                    {pageContent.sidebar.eventsEmail}
                   </a>
                 </div>
 
@@ -165,7 +166,7 @@ export default function ContactPage() {
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-(--accent-gold)">
-                    Follow along
+                    {pageContent.sidebar.followEyebrow}
                   </p>
                   <a
                     href={siteConfig.social.instagram}

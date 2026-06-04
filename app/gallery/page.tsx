@@ -3,6 +3,7 @@ import Image from "next/image";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BookingButton } from "@/components/ui/ReservationModal";
 import { createPageMetadata } from "@/lib/metadata";
+import { getPageContent } from "@/lib/page-content";
 import { galleryAssets, pageOgImages } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -12,11 +13,12 @@ const categoryLabels: Record<string, string> = {
   vibe: "Atmosphere",
 };
 
+const pageContent = getPageContent("gallery");
+
 export const metadata = createPageMetadata({
   path: "/gallery",
-  title: "Gallery | Tokyo Club Sushi Speakeasy",
-  description:
-    "Browse the gallery of Tokyo Club Sushi Speakeasy — premium sushi, craft cocktails, and moody interior shots from our South Beach hidden bar.",
+  title: pageContent.seo.title,
+  description: pageContent.seo.description,
   image: pageOgImages.gallery,
 });
 
@@ -32,11 +34,9 @@ export default function GalleryPage() {
       {/* Editorial header */}
       <Reveal>
         <header className="section-space container-shell">
-          <p className="eyebrow mb-6">Gallery</p>
+          <p className="eyebrow mb-6">{pageContent.hero.eyebrow}</p>
           <h1 className="section-title max-w-3xl">
-            Every detail,
-            <br />
-            <span className="text-(--accent-gold)">worth the frame.</span>
+            {pageContent.hero.title}
           </h1>
           <div className="editorial-rule mt-8 max-w-xs" />
         </header>
@@ -47,10 +47,10 @@ export default function GalleryPage() {
         <section className="container-shell">
           <figure className="group relative overflow-hidden rounded-4xl">
             <Image
-              src={galleryAssets[0].src}
-              alt={galleryAssets[0].alt}
-              width={galleryAssets[0].width}
-              height={galleryAssets[0].height}
+              src={pageContent.hero.image.src}
+              alt={pageContent.hero.image.alt}
+              width={pageContent.hero.image.width ?? 1365}
+              height={pageContent.hero.image.height ?? 2048}
               priority
               className="h-auto max-h-[70vh] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />
@@ -94,14 +94,14 @@ export default function GalleryPage() {
         <section className="container-shell section-space text-center">
           <div className="editorial-rule mx-auto mb-10 max-w-24" />
           <p className="mx-auto max-w-md text-sm leading-relaxed tracking-wide text-(--text-muted)">
-            The room looks even better in person.
+            {pageContent.cta.eyebrow}
           </p>
           <h2 className="mt-3 font-(family-name:--font-display) text-3xl font-medium tracking-tight text-stone-100 sm:text-4xl">
-            See it live in South Beach.
+            {pageContent.cta.title}
           </h2>
           <div className="mt-8">
             <BookingButton className="btn-primary">
-              Reserve a Table
+              {pageContent.cta.buttonLabel}
             </BookingButton>
           </div>
         </section>

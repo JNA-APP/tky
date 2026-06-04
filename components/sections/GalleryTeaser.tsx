@@ -1,51 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { galleryAssets } from "@/lib/site";
+import type { HomePageContent } from "@/lib/page-content";
 
-const teaserSlots = [
-  {
-    src: galleryAssets[3].src,
-    alt: galleryAssets[3].alt,
-    width: galleryAssets[3].width,
-    height: galleryAssets[3].height,
-    category: "food",
-  },
-  {
-    src: "/pictures/Food2.png",
-    alt: "A torched wagyu sushi roll finished with flame at Tokyo Club Sushi Speakeasy.",
-    width: 1365,
-    height: 2048,
-    category: "food",
-  },
-  {
-    src: "/pictures/Drinks.png",
-    alt: "Signature Tokyo Club cocktails served side by side under dramatic low light.",
-    width: 1365,
-    height: 2048,
-    category: "cocktails",
-  },
-];
-
-export function GalleryTeaser() {
+export function GalleryTeaser({ content }: { content: HomePageContent["galleryTeaser"] }) {
   return (
     <section className="section-space">
       <div className="container-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="space-y-5">
-          <span className="eyebrow">Gallery Teaser</span>
+          <span className="eyebrow">{content.eyebrow}</span>
           <h2 className="section-title">
-            Visual stories, thoughtfully framed.
+            {content.title}
           </h2>
           <p className="section-copy">
-            Explore our handpicked selection of images, offering a vivid glimpse into the Tokyo Club experience. Every photo captures the essence of our food, drinks, and atmosphere—inviting you to discover more.
+            {content.description}
           </p>
-          <Link href="/gallery" className="btn-secondary">
-            View Full Gallery
+          <Link href={content.button.href} className="btn-secondary">
+            {content.button.label}
           </Link>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-3">
-          {teaserSlots.map((asset, index) => (
+          {content.images.map((asset, index) => (
             <div
               key={asset.src}
               className={`relative overflow-hidden rounded-[1.8rem] border border-white/10 ${
@@ -55,8 +31,8 @@ export function GalleryTeaser() {
               <Image
                 src={asset.src}
                 alt={asset.alt}
-                width={asset.width}
-                height={asset.height}
+                width={asset.width ?? 1365}
+                height={asset.height ?? 2048}
                 className="media-lift aspect-4/5 h-full w-full object-cover transition duration-700 hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent px-5 py-4">

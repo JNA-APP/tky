@@ -21,7 +21,16 @@ The static export is written to `out/`, which is what Netlify publishes.
 
 The CMS is available at `/admin/` after the site is deployed to Netlify.
 
-Blog posts are stored as Markdown files in `content/blog/`. Uploaded featured images are stored in `public/uploads/blog/`.
+Page content is stored in `content/pages/`. Blog posts are stored as Markdown files in `content/blog/`. Uploaded images are stored in `public/uploads/blog/`.
+
+The admin panel includes editable entries for:
+
+- Home page
+- Menu page
+- Experience page
+- Gallery page
+- Contact page
+- Blog posts
 
 Each blog post has:
 

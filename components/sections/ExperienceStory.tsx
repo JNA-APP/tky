@@ -3,16 +3,16 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { experiencePillars } from "@/lib/site";
+import type { HomePageContent } from "@/lib/page-content";
 
 const AUTOPLAY_MS = 5000;
 
-export function ExperienceStory() {
+export function ExperienceStory({ content }: { content: HomePageContent["experience"] }) {
   const [active, setActive] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const count = experiencePillars.length;
+  const count = content.pillars.length;
 
   const go = useCallback(
     (next: number) => {
@@ -50,10 +50,10 @@ export function ExperienceStory() {
         <div className="grid gap-12 border-t border-white/8 pt-12 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
           {/* Text panel — title & body crossfade based on active slide */}
           <div className="space-y-5">
-            <span className="eyebrow">The ultimate sushi speakeasy in South Beach</span>
+            <span className="eyebrow">{content.eyebrow}</span>
 
             <div className="relative min-h-28">
-              {experiencePillars.map((pillar, i) => (
+              {content.pillars.map((pillar, i) => (
                 <h2
                   key={pillar.title}
                   className={`section-title transition-all duration-500 ${
@@ -68,7 +68,7 @@ export function ExperienceStory() {
             </div>
 
             <div className="relative min-h-36">
-              {experiencePillars.map((pillar, i) => (
+              {content.pillars.map((pillar, i) => (
                 <p
                   key={pillar.title}
                   className={`section-copy transition-all duration-500 ${
@@ -84,7 +84,7 @@ export function ExperienceStory() {
 
             {/* Pagination dots */}
             <div className="flex items-center gap-3 pt-2">
-              {experiencePillars.map((pillar, i) => (
+              {content.pillars.map((pillar, i) => (
                 <button
                   key={pillar.title}
                   type="button"
@@ -98,7 +98,7 @@ export function ExperienceStory() {
 
           {/* 3D stacked carousel */}
           <div className="carousel-stage">
-            {experiencePillars.map((pillar, i) => {
+            {content.pillars.map((pillar, i) => {
               const position = getPosition(i);
               return (
                 <button
@@ -111,8 +111,8 @@ export function ExperienceStory() {
                   <Image
                     src={pillar.image.src}
                     alt={pillar.image.alt}
-                    width={pillar.image.width}
-                    height={pillar.image.height}
+                    width={pillar.image.width ?? 1365}
+                    height={pillar.image.height ?? 2048}
                     className="h-full w-full object-cover"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 via-black/30 to-transparent p-6">

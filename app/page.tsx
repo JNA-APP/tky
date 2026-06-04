@@ -7,13 +7,15 @@ import { SocialProof } from "@/components/sections/SocialProof";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { Reveal } from "@/components/ui/Reveal";
 import { createPageMetadata } from "@/lib/metadata";
+import { getPageContent } from "@/lib/page-content";
 import { pageOgImages } from "@/lib/site";
+
+const pageContent = getPageContent("home");
 
 export const metadata = createPageMetadata({
   path: "/",
-  title: "Tokyo Club Sushi Speakeasy | Modern Japanese Speakeasy in South Beach",
-  description:
-    "A hidden Japanese speakeasy in South Beach serving premium sushi, craft cocktails, and late-night energy at 1000 Collins Ave. Book your table.",
+  title: pageContent.seo.title,
+  description: pageContent.seo.description,
   image: pageOgImages.home,
 });
 
@@ -25,21 +27,21 @@ export default function HomePage() {
         path="/"
         image={pageOgImages.home}
       />
-      <Hero />
+      <Hero content={pageContent.hero} />
       <Reveal delay={50}>
-        <ExperienceStory />
+        <ExperienceStory content={pageContent.experience} />
       </Reveal>
       <Reveal delay={90}>
-        <MenuPreview />
+        <MenuPreview content={pageContent.menuPreview} />
       </Reveal>
       <Reveal delay={130}>
-        <EventOccasions />
+        <EventOccasions content={pageContent.events} />
       </Reveal>
       <Reveal delay={170}>
-        <SocialProof />
+        <SocialProof content={pageContent.socialProof} />
       </Reveal>
       <Reveal delay={210}>
-        <GalleryTeaser />
+        <GalleryTeaser content={pageContent.galleryTeaser} />
       </Reveal>
     </>
   );

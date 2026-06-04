@@ -2,15 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { BookingButton } from "@/components/ui/ReservationModal";
-import { heroGallery, siteConfig } from "@/lib/site";
+import type { HomePageContent } from "@/lib/page-content";
 
-export function Hero() {
+export function Hero({ content }: { content: HomePageContent["hero"] }) {
   return (
     <section className="relative isolate h-dvh overflow-hidden">
       <div className="absolute inset-0">
         <video
-          src="/videos/Tokyo%20Video.MOV"
-          poster={heroGallery[0].src}
+          src={content.video}
+          poster={content.poster.src}
           autoPlay
           muted
           loop
@@ -25,23 +25,22 @@ export function Hero() {
       <div className="relative z-10 mx-auto grid h-full w-[min(100%-clamp(2.75rem,6vw,7rem),80rem)] grid-rows-[1fr_auto] pt-(--header-offset) lg:grid-cols-[1fr_0.85fr] lg:gap-10">
         <div className="flex items-center">
           <div className="hero-stack max-w-2xl space-y-7 py-10 lg:py-0">
-            <span className="eyebrow">Japanese speakeasy meets Miami nightlife</span>
+            <span className="eyebrow">{content.eyebrow}</span>
 
             <h1 className="section-title max-w-xl">
-              South Beach&apos;s late-night sushi ritual.
+              {content.title}
             </h1>
 
             <p className="section-copy text-stone-200">
-              Premium sushi, sculpted cocktails, moody lighting, and a room
-              built for date nights, celebrations, and unforgettable after-dark plans.
+              {content.description}
             </p>
 
             <div className="flex flex-col items-stretch gap-4 pt-1 sm:flex-row sm:items-center lg:items-start">
               <BookingButton className="btn-primary">
-                Book a Table
+                {content.primaryButtonLabel}
               </BookingButton>
-              <Link href="/menu" className="btn-secondary">
-                Explore the Menu
+              <Link href={content.secondaryButton.href} className="btn-secondary">
+                {content.secondaryButton.label}
               </Link>
             </div>
           </div>
@@ -51,10 +50,10 @@ export function Hero() {
           <div className="gold-frame floating-media max-h-full w-full overflow-hidden rounded-4xl border border-white/12 bg-black/25 p-3.5">
             <div className="h-full overflow-hidden rounded-[1.4rem] border border-white/10">
               <Image
-                src={heroGallery[1].src}
-                alt={heroGallery[1].alt}
-                width={heroGallery[1].width}
-                height={heroGallery[1].height}
+                src={content.sideImage.src}
+                alt={content.sideImage.alt}
+                width={content.sideImage.width ?? 1365}
+                height={content.sideImage.height ?? 2048}
                 priority
                 className="h-full w-full object-cover"
               />
@@ -63,10 +62,11 @@ export function Hero() {
         </div>
 
         <div className="hero-marquee col-span-full flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 py-5 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-stone-300">
-          <span className="text-(--accent-gold)">4.8 Google Rating</span>
-          <span>200+ Reviews</span>
-          <span>1000 Collins Ave</span>
-          <span>{siteConfig.hours}</span>
+          {content.marquee.map((item, index) => (
+            <span key={item} className={index === 0 ? "text-(--accent-gold)" : undefined}>
+              {item}
+            </span>
+          ))}
         </div>
       </div>
     </section>

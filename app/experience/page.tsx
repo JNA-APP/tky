@@ -3,14 +3,20 @@ import Image from "next/image";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BookingButton } from "@/components/ui/ReservationModal";
 import { createPageMetadata } from "@/lib/metadata";
+import type { CmsImage } from "@/lib/page-content";
+import { getPageContent } from "@/lib/page-content";
 import { pageOgImages, siteConfig } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
 
+const pageContent = getPageContent("experience");
+const sections = pageContent.sections ?? {};
+const sectionText = (key: string) => sections[key] as string;
+const sectionImage = (key: string) => sections[key] as CmsImage;
+
 export const metadata = createPageMetadata({
   path: "/experience",
-  title: "The Experience | Tokyo Club Sushi Speakeasy",
-  description:
-    "Step inside Tokyo Club Sushi Speakeasy — an intimate hidden bar in South Beach with moody lighting, Japanese craftsmanship, and unforgettable nightlife energy.",
+  title: pageContent.seo.title,
+  description: pageContent.seo.description,
   image: pageOgImages.experience,
 });
 
@@ -27,10 +33,10 @@ export default function ExperiencePage() {
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/pictures/27-DSC08232.jpg"
-            alt="A moody table setting inside Tokyo Club Sushi Speakeasy with Japanese scroll art and dark slatted walls."
-            width={1365}
-            height={2048}
+            src={pageContent.hero.image.src}
+            alt={pageContent.hero.image.alt}
+            width={pageContent.hero.image.width ?? 1365}
+            height={pageContent.hero.image.height ?? 2048}
             priority
             className="h-full w-full object-cover object-center opacity-35"
           />
@@ -39,20 +45,20 @@ export default function ExperiencePage() {
         </div>
 
         <div className="relative z-10 flex min-h-[calc(100dvh-var(--header-offset))] flex-col items-center justify-center px-6 py-20 text-center">
-          <span className="eyebrow mb-6">Tokyo Club Sushi Speakeasy</span>
+          <span className="eyebrow mb-6">{pageContent.hero.eyebrow}</span>
           <h1 className="font-(family-name:--font-display) text-[clamp(3rem,8vw,6.5rem)] leading-[0.9] tracking-[-0.04em]">
-            The Experience
+            {pageContent.hero.title}
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-stone-400 sm:text-lg">
-            A modern Japanese speakeasy where culinary artistry, handcrafted cocktails, and unforgettable atmosphere converge in the heart of South Beach.
+            {pageContent.hero.description}
           </p>
 
           <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
             <BookingButton className="btn-primary">
-              Reserve Your Night
+              {pageContent.hero.primaryButtonLabel ?? "Reserve Your Night"}
             </BookingButton>
-            <a href="/menu" className="btn-secondary">
-              Explore the Menu
+            <a href={pageContent.hero.secondaryButton?.href ?? "/menu"} className="btn-secondary">
+              {pageContent.hero.secondaryButton?.label ?? "Explore the Menu"}
             </a>
           </div>
         </div>
@@ -64,25 +70,25 @@ export default function ExperiencePage() {
           <div className="container-shell">
             <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
               <div className="space-y-6">
-                <span className="eyebrow">Our story</span>
+                <span className="eyebrow">{sectionText("storyEyebrow")}</span>
                 <h2 className="font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                  A hidden world behind the door.
+                  {sectionText("storyTitle")}
                 </h2>
                 <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  At Tokyo Club Sushi Speakeasy, we blend the artistry of traditional sushi craftsmanship with an elevated nightlife atmosphere, creating an experience that delights the senses and excites the palate. Our sushi masters meticulously select the finest, freshest ingredients — crafting every roll, sashimi, and nigiri to perfection.
+                  {sectionText("storyBodyOne")}
                 </p>
                 <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  Step inside and you&apos;ll find a space that feels both intimate and alive — dark lacquer walls, warm golden light, and the kind of energy that turns a dinner reservation into a lasting memory.
+                  {sectionText("storyBodyTwo")}
                 </p>
               </div>
 
               <div className="gold-frame overflow-hidden rounded-3xl border border-white/12 bg-black/25 p-3">
                 <div className="overflow-hidden rounded-[1.15rem] border border-white/8">
                   <Image
-                    src="/pictures/Experiance page.png"
-                    alt="The intimate Tokyo Club Sushi Speakeasy dining room in warm, moody light."
-                    width={1365}
-                    height={2048}
+                    src={sectionImage("storyImage").src}
+                    alt={sectionImage("storyImage").alt}
+                    width={sectionImage("storyImage").width ?? 1365}
+                    height={sectionImage("storyImage").height ?? 2048}
                     className="aspect-4/5 h-full w-full object-cover"
                   />
                 </div>
@@ -103,20 +109,20 @@ export default function ExperiencePage() {
           <div className="container-shell">
             <div className="relative isolate overflow-hidden rounded-4xl border border-white/8">
               <Image
-                src="/pictures/29-DSC08280.jpg"
-                alt="Golden koi fish sculptures swimming across a dark textured wall inside Tokyo Club Sushi Speakeasy."
-                width={1365}
-                height={2048}
+                src={sectionImage("proverbImage").src}
+                alt={sectionImage("proverbImage").alt}
+                width={sectionImage("proverbImage").width ?? 1365}
+                height={sectionImage("proverbImage").height ?? 2048}
                 className="h-full w-full object-cover object-top opacity-50"
                 style={{ aspectRatio: "16 / 7" }}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,14,16,0.3)_0%,rgba(14,14,16,0.6)_50%,rgba(14,14,16,0.85)_100%)]" />
               <div className="absolute inset-0 z-1 flex flex-col items-center justify-center px-8 text-center">
                 <p className="font-(family-name:--font-display) text-[clamp(1.5rem,4vw,3rem)] italic leading-[1.15] tracking-[-0.02em] text-stone-200">
-                  &ldquo;Hara hachibu-me ni isha irazu.&rdquo;
+                  &ldquo;{sectionText("proverb")}&rdquo;
                 </p>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-stone-400 sm:text-base">
-                  If you fill your stomach to 8/10, you don&apos;t need a doctor. — Japanese proverb
+                  {sectionText("proverbTranslation")}
                 </p>
               </div>
             </div>
@@ -134,9 +140,9 @@ export default function ExperiencePage() {
         <section className="section-space">
           <div className="container-shell">
             <div className="mb-14 text-center">
-              <span className="eyebrow justify-center">What sets us apart</span>
+              <span className="eyebrow justify-center">{sectionText("featuresEyebrow")}</span>
               <h2 className="mt-4 font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                Experience Tokyo, one bite at a time.
+                {sectionText("featuresTitle")}
               </h2>
             </div>
 
@@ -220,15 +226,15 @@ export default function ExperiencePage() {
               </div>
 
               <div className="order-1 space-y-6 lg:order-2">
-                <span className="eyebrow">Creativity & Energy</span>
+                <span className="eyebrow">{sectionText("creativityEyebrow")}</span>
                 <h2 className="font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                  Where dinner becomes a scene.
+                  {sectionText("creativityTitle")}
                 </h2>
                 <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  Our chefs are constantly pushing the boundaries of innovation to create dishes that are both visually stunning and incredibly delicious — exploring new flavor combinations and techniques to keep things fresh and exciting.
+                  {sectionText("creativityBodyOne")}
                 </p>
                 <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  Whether you&apos;re celebrating a special occasion or seeking an unforgettable night out, Tokyo Club Sushi Speakeasy brings the vibrancy, elegance, and energy of Tokyo&apos;s dining scene right to your doorstep.
+                  {sectionText("creativityBodyTwo")}
                 </p>
                 <BookingButton className="btn-secondary mt-2 inline-flex">
                   Plan Your Night
@@ -260,12 +266,12 @@ export default function ExperiencePage() {
         <div className="container-shell">
           <div className="editorial-rule mb-14" />
           <div className="flex flex-col items-center text-center">
-            <span className="eyebrow justify-center">Your table awaits</span>
+            <span className="eyebrow justify-center">{sectionText("finalEyebrow")}</span>
             <h2 className="mt-4 font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-              Come roll with us.
+              {sectionText("finalTitle")}
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-stone-400">
-              Join us for an unforgettable blend of culinary artistry, refreshing libations, and pure entertainment — right here in South Beach.
+              {sectionText("finalDescription")}
             </p>
             <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
               <BookingButton className="btn-primary">
