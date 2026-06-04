@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "public/uploads/blog"
+public_folder: "/uploads/blog"
+
+site_url: "https://www.tokyosushispeakeasy.com"
+display_url: "https://www.tokyosushispeakeasy.com"
+logo_url: "/logo/tokyo-club-logo.svg"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    identifier_field: "title"
+    slug: "{{slug}}"
+    fields:
+      - label: "Featured Image"
+        name: "featuredImage"
+        widget: "image"
+        required: true
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "Use lowercase words separated by hyphens, for example south-beach-sushi-night."
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
+        required: true
+      - label: "Categories"
+        name: "categories"
+        widget: "list"
+        required: false
+        field:
+          label: "Category"
+          name: "category"
+          widget: "string"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        required: true
