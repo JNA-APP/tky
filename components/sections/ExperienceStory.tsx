@@ -1,129 +1,111 @@
-"use client";
-
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
+import { BookingButton } from "@/components/ui/ReservationModal";
 import type { HomePageContent } from "@/lib/page-content";
 
-const AUTOPLAY_MS = 5000;
+const storyImages = [
+  {
+    src: "/pictures/04-lychee-orchid-and-citrus-cocktails.jpg",
+    alt: "Lychee orchid cocktails in Tokyo Club's moody room.",
+    width: 2048,
+    height: 1365,
+    className: "aspect-square",
+  },
+  {
+    src: "/pictures/11-beef-sushi-roll-with-cocktail-and-bao.jpg",
+    alt: "Beef sushi roll with cocktails and bao.",
+    width: 1365,
+    height: 2048,
+    className: "mx-auto aspect-square w-[69%]",
+  },
+  {
+    src: "/pictures/17-DSC07903.jpg",
+    alt: "Tokyo Club dining room detail.",
+    width: 1365,
+    height: 2048,
+    className: "mx-auto aspect-square w-[69%]",
+  },
+  {
+    src: "/pictures/15-japanese-dinner-spread-sushi-bao-dumplings.jpg",
+    alt: "Japanese dinner spread with sushi, bao, and dumplings.",
+    width: 1365,
+    height: 2048,
+    className: "aspect-square",
+  },
+];
+
+const stats = [
+  ["2+", "Years in South Beach"],
+  ["40+", "Signature Creations"],
+  ["∞", "Unforgettable Nights"],
+];
 
 export function ExperienceStory({ content }: { content: HomePageContent["experience"] }) {
-  const [active, setActive] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const count = content.pillars.length;
-
-  const go = useCallback(
-    (next: number) => {
-      if (next === active || isTransitioning) return;
-      setIsTransitioning(true);
-      setActive(next);
-      setTimeout(() => setIsTransitioning(false), 600);
-    },
-    [active, isTransitioning],
-  );
-
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setActive((prev) => (prev + 1) % count);
-    }, AUTOPLAY_MS);
-  }, [count]);
-
-  useEffect(() => {
-    resetTimer();
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [active, resetTimer]);
-
-  const getPosition = (index: number) => {
-    if (index === active) return "center";
-    const diff = (index - active + count) % count;
-    return diff === 1 ? "right" : "left";
-  };
+  const pillar = content.pillars[0];
 
   return (
-    <section className="section-space">
-      <div className="container-shell">
-        <div className="grid gap-12 border-t border-white/8 pt-12 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
-          {/* Text panel — title & body crossfade based on active slide */}
-          <div className="space-y-5">
-            <span className="eyebrow">{content.eyebrow}</span>
+    <section className="relative overflow-hidden bg-(--background) py-[clamp(4rem,8vw,7.5rem)]">
+      <div className="pointer-events-none absolute -left-20 top-1/4 size-80 rounded-full border border-(--accent-red)/20" />
+      <div className="pointer-events-none absolute -right-20 top-1/4 size-80 rounded-full border border-(--accent-red)/20" />
 
-            <div className="relative min-h-28">
-              {content.pillars.map((pillar, i) => (
-                <h2
-                  key={pillar.title}
-                  className={`section-title transition-all duration-500 ${
-                    i === active
-                      ? "relative opacity-100"
-                      : "pointer-events-none absolute inset-0 opacity-0 translate-y-3"
-                  }`}
-                >
-                  {pillar.title}
-                </h2>
-              ))}
+      <div className="container-shell grid gap-10 lg:grid-cols-[300px_minmax(0,668px)_300px] lg:items-center lg:gap-[46px]">
+        <div className="hidden h-[587px] flex-col justify-between lg:flex">
+          {storyImages.slice(0, 2).map((image) => (
+            <div key={image.src} className={`figma-image-card ${image.className}`}>
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                className="h-full w-full object-cover"
+              />
             </div>
+          ))}
+        </div>
 
-            <div className="relative min-h-36">
-              {content.pillars.map((pillar, i) => (
-                <p
-                  key={pillar.title}
-                  className={`section-copy transition-all duration-500 ${
-                    i === active
-                      ? "relative opacity-100"
-                      : "pointer-events-none absolute inset-0 opacity-0 translate-y-2"
-                  }`}
-                >
-                  {pillar.body}
-                </p>
-              ))}
-            </div>
-
-            {/* Pagination dots */}
-            <div className="flex items-center gap-3 pt-2">
-              {content.pillars.map((pillar, i) => (
-                <button
-                  key={pillar.title}
-                  type="button"
-                  aria-label={`Show: ${pillar.title}`}
-                  onClick={() => go(i)}
-                  className={`carousel-dot ${i === active ? "carousel-dot-active" : ""}`}
-                />
-              ))}
-            </div>
+        <div className="mx-auto max-w-[668px] text-center">
+          <span className="eyebrow justify-center">{content.eyebrow}</span>
+          <div className="mt-8 space-y-4">
+            <h2 className="figma-section-title text-white">{pillar.title}</h2>
+            <p className="mx-auto max-w-[42rem] text-base font-light leading-[1.4] tracking-wide text-white/60">
+              {pillar.body}
+            </p>
           </div>
 
-          {/* 3D stacked carousel */}
-          <div className="carousel-stage">
-            {content.pillars.map((pillar, i) => {
-              const position = getPosition(i);
-              return (
-                <button
-                  key={pillar.title}
-                  type="button"
-                  aria-label={`Select: ${pillar.title}`}
-                  onClick={() => go(i)}
-                  className={`carousel-card carousel-card-${position}`}
-                >
-                  <Image
-                    src={pillar.image.src}
-                    alt={pillar.image.alt}
-                    width={pillar.image.width ?? 1365}
-                    height={pillar.image.height ?? 2048}
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 via-black/30 to-transparent p-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--accent-gold)">
-                      {pillar.title}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
+          <div className="my-20 flex justify-center gap-4">
+            <span className="h-0.5 w-6 bg-(--accent-gold)" />
+            <span className="h-0.5 w-6 bg-(--accent-gold)" />
+            <span className="h-0.5 w-6 bg-(--accent-gold)" />
           </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {stats.map(([value, label]) => (
+              <div key={label} className="figma-stat p-4 text-left">
+                <p className="text-3xl font-semibold text-(--accent-gold)">{value}</p>
+                <p className="mt-3 text-sm font-light uppercase leading-[1.4] text-white">{label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row lg:hidden">
+            <BookingButton className="btn-primary">Reserve a Table</BookingButton>
+            <Link href="/menu" className="btn-secondary">Explore the Menu</Link>
+          </div>
+        </div>
+
+        <div className="hidden h-[587px] flex-col justify-between lg:flex">
+          {storyImages.slice(2).map((image) => (
+            <div key={image.src} className={`figma-image-card ${image.className}`}>
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

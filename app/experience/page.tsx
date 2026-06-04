@@ -1,17 +1,59 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BookingButton } from "@/components/ui/ReservationModal";
+import { Reveal } from "@/components/ui/Reveal";
 import { createPageMetadata } from "@/lib/metadata";
 import type { CmsImage } from "@/lib/page-content";
 import { getPageContent } from "@/lib/page-content";
-import { pageOgImages, siteConfig } from "@/lib/site";
-import { Reveal } from "@/components/ui/Reveal";
+import { eventOccasions, pageOgImages, testimonials } from "@/lib/site";
 
 const pageContent = getPageContent("experience");
 const sections = pageContent.sections ?? {};
 const sectionText = (key: string) => sections[key] as string;
 const sectionImage = (key: string) => sections[key] as CmsImage;
+
+const eventImages = [
+  "/pictures/18-DSC08011.jpg",
+  "/pictures/28-DSC08248.jpg",
+  "/pictures/27-DSC08232.jpg",
+];
+
+const moments = [
+  ["Omotenashi", "Service that feels warm, attentive, and personal."],
+  ["Craft Cocktails", "Sculpted pours built for the room after dark."],
+  ["Sushi Atmosphere", "Japanese technique with South Beach momentum."],
+  ["The Speakeasy", "A hidden, intimate setting made for memorable nights."],
+];
+
+const gallery = [
+  {
+    src: "/pictures/Food2.png",
+    alt: "A vivid lobster and sushi plate at Tokyo Club.",
+    className: "lg:row-span-2",
+  },
+  {
+    src: "/pictures/Drinks.png",
+    alt: "Tokyo Club cocktails and sushi served under dramatic light.",
+    className: "",
+  },
+  {
+    src: "/pictures/04-lychee-orchid-and-citrus-cocktails.jpg",
+    alt: "Lychee orchid cocktails in Tokyo Club's moody room.",
+    className: "",
+  },
+  {
+    src: "/pictures/13-matcha-cake-with-mango-and-pansy.jpg",
+    alt: "Matcha dessert with mango and pansy.",
+    className: "",
+  },
+  {
+    src: "/pictures/08-citrus-cocktail-with-dried-lime-and-flowers.jpg",
+    alt: "Citrus cocktail with dried lime and flowers.",
+    className: "lg:col-span-2",
+  },
+];
 
 export const metadata = createPageMetadata({
   path: "/experience",
@@ -22,268 +64,292 @@ export const metadata = createPageMetadata({
 
 export default function ExperiencePage() {
   return (
-    <div className="mt-(--header-offset)">
+    <>
       <StructuredData
         name="Tokyo Club Sushi Speakeasy Experience"
         path="/experience"
         image={pageOgImages.experience}
         description="Step inside Tokyo Club Sushi Speakeasy — an intimate hidden speakeasy in South Beach with moody lighting, Japanese craftsmanship, and unforgettable nightlife energy."
       />
-      {/* ── Full-bleed hero ── */}
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src={pageContent.hero.image.src}
-            alt={pageContent.hero.image.alt}
-            width={pageContent.hero.image.width ?? 1365}
-            height={pageContent.hero.image.height ?? 2048}
-            priority
-            className="h-full w-full object-cover object-center opacity-35"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,14,16,0.35)_0%,rgba(14,14,16,0.65)_45%,rgba(14,14,16,0.97)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(200,164,106,0.1),transparent_55%)]" />
-        </div>
 
-        <div className="relative z-10 flex min-h-[calc(100dvh-var(--header-offset))] flex-col items-center justify-center px-6 py-20 text-center">
-          <span className="eyebrow mb-6">{pageContent.hero.eyebrow}</span>
-          <h1 className="font-(family-name:--font-display) text-[clamp(3rem,8vw,6.5rem)] leading-[0.9] tracking-[-0.04em]">
-            {pageContent.hero.title}
-          </h1>
-          <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-stone-400 sm:text-lg">
-            {pageContent.hero.description}
-          </p>
+      <section className="relative isolate min-h-[600px] overflow-hidden pt-(--header-offset)">
+        <Image
+          src={pageContent.hero.image.src}
+          alt={pageContent.hero.image.alt}
+          width={pageContent.hero.image.width ?? 1365}
+          height={pageContent.hero.image.height ?? 2048}
+          priority
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-70"
+        />
+        <div className="absolute inset-0 -z-10 bg-black/70" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-black/10 via-[#170307]/35 to-[#170307]" />
 
-          <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
-            <BookingButton className="btn-primary">
-              {pageContent.hero.primaryButtonLabel ?? "Reserve Your Night"}
-            </BookingButton>
-            <a href={pageContent.hero.secondaryButton?.href ?? "/menu"} className="btn-secondary">
-              {pageContent.hero.secondaryButton?.label ?? "Explore the Menu"}
-            </a>
+        <div className="container-shell flex min-h-[calc(600px-var(--header-offset))] items-center">
+          <div className="max-w-[39rem] pb-14 pt-20">
+            <span className="eyebrow text-white">{pageContent.hero.eyebrow}</span>
+            <h1 className="mt-7 font-(family-name:--font-display) text-[clamp(3.2rem,6vw,5rem)] leading-[1.02] text-white">
+              Tokyo <span className="italic text-(--accent-gold)">Club</span> Sushi Speakeasy
+            </h1>
+            <p className="mt-5 max-w-xl text-base font-light leading-[1.4] tracking-wide text-white/70">
+              {pageContent.hero.description}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ── Brand story — speakeasy narrative ── */}
       <Reveal>
-        <section className="section-space">
-          <div className="container-shell">
-            <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
-              <div className="space-y-6">
-                <span className="eyebrow">{sectionText("storyEyebrow")}</span>
-                <h2 className="font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                  {sectionText("storyTitle")}
-                </h2>
-                <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  {sectionText("storyBodyOne")}
-                </p>
-                <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  {sectionText("storyBodyTwo")}
-                </p>
-              </div>
-
-              <div className="gold-frame overflow-hidden rounded-3xl border border-white/12 bg-black/25 p-3">
-                <div className="overflow-hidden rounded-[1.15rem] border border-white/8">
-                  <Image
-                    src={sectionImage("storyImage").src}
-                    alt={sectionImage("storyImage").alt}
-                    width={sectionImage("storyImage").width ?? 1365}
-                    height={sectionImage("storyImage").height ?? 2048}
-                    className="aspect-4/5 h-full w-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* ── Decorative rule ── */}
-      <div className="container-shell">
-        <div className="editorial-rule" />
-      </div>
-
-      {/* ── Full-width atmospheric image with proverb ── */}
-      <Reveal delay={60}>
-        <section className="section-space">
-          <div className="container-shell">
-            <div className="relative isolate overflow-hidden rounded-4xl border border-white/8">
+        <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div className="figma-image-card aspect-[4/3] lg:aspect-[668/468]">
               <Image
-                src={sectionImage("proverbImage").src}
-                alt={sectionImage("proverbImage").alt}
-                width={sectionImage("proverbImage").width ?? 1365}
-                height={sectionImage("proverbImage").height ?? 2048}
-                className="h-full w-full object-cover object-top opacity-50"
-                style={{ aspectRatio: "16 / 7" }}
+                src={sectionImage("storyImage").src}
+                alt={sectionImage("storyImage").alt}
+                width={sectionImage("storyImage").width ?? 1365}
+                height={sectionImage("storyImage").height ?? 2048}
+                className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,14,16,0.3)_0%,rgba(14,14,16,0.6)_50%,rgba(14,14,16,0.85)_100%)]" />
-              <div className="absolute inset-0 z-1 flex flex-col items-center justify-center px-8 text-center">
-                <p className="font-(family-name:--font-display) text-[clamp(1.5rem,4vw,3rem)] italic leading-[1.15] tracking-[-0.02em] text-stone-200">
-                  &ldquo;{sectionText("proverb")}&rdquo;
-                </p>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-stone-400 sm:text-base">
-                  {sectionText("proverbTranslation")}
-                </p>
+            </div>
+
+            <div className="max-w-[41rem]">
+              <span className="eyebrow">{sectionText("storyEyebrow")}</span>
+              <h2 className="figma-section-title mt-8 text-white">{sectionText("storyTitle")}</h2>
+              <p className="mt-5 text-base font-light leading-[1.55] tracking-wide text-white/65">
+                {sectionText("storyBodyOne")}
+              </p>
+              <p className="mt-5 text-base font-light leading-[1.55] tracking-wide text-white/65">
+                {sectionText("storyBodyTwo")}
+              </p>
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <BookingButton className="btn-primary">Reserve a Table</BookingButton>
+                <Link href="/gallery" className="btn-secondary">See the Space</Link>
               </div>
             </div>
           </div>
         </section>
       </Reveal>
 
-      {/* ── Decorative rule ── */}
-      <div className="container-shell">
-        <div className="editorial-rule" />
-      </div>
-
-      {/* ── Two editorial feature columns ── */}
-      <Reveal delay={90}>
-        <section className="section-space">
+      <Reveal delay={60}>
+        <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
           <div className="container-shell">
-            <div className="mb-14 text-center">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-[48rem]">
+                <span className="eyebrow">Host your night the Tokyo way</span>
+                <h2 className="figma-section-title mt-8 text-white">
+                  Built for celebrations, group plans, and after-dark momentum.
+                </h2>
+              </div>
+              <Link href="/contact" className="btn-secondary w-fit">Plan an Event</Link>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-3">
+              {eventOccasions.map((occasion, index) => (
+                <article key={occasion.title} className="figma-image-card relative min-h-[25rem]">
+                  <Image
+                    src={eventImages[index]}
+                    alt={occasion.title}
+                    width={1365}
+                    height={2048}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#170307] via-[#170307]/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <h3 className="text-2xl font-medium text-white">{occasion.title}</h3>
+                    <p className="mt-3 text-sm font-light leading-[1.4] tracking-wide text-white/70">
+                      {occasion.description}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal delay={90}>
+        <section className="relative overflow-hidden bg-[#120205] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell">
+            <div className="mx-auto max-w-[50rem] text-center">
+              <h2 className="figma-section-title text-white">The Moments Guests Come Back For.</h2>
+            </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {moments.map(([title, body]) => (
+                <article key={title} className="figma-card p-6">
+                  <span className="text-(--accent-red)">◆</span>
+                  <h3 className="mt-5 text-lg font-medium text-white">{title}</h3>
+                  <p className="mt-3 text-sm font-light leading-[1.5] tracking-wide text-white/60">{body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal delay={120}>
+        <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell">
+            <div className="mx-auto mb-12 max-w-[44rem] text-center">
               <span className="eyebrow justify-center">{sectionText("featuresEyebrow")}</span>
-              <h2 className="mt-4 font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                {sectionText("featuresTitle")}
-              </h2>
+              <h2 className="figma-section-title mt-8 text-white">{sectionText("featuresTitle")}</h2>
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
-              {/* Authenticity & Craft */}
-              <article className="group relative isolate overflow-hidden rounded-3xl border border-white/10">
-                <div className="aspect-3/4 overflow-hidden sm:aspect-4/5">
+              {[
+                {
+                  eyebrow: "Authenticity & Craft",
+                  title: "Every detail reflects precision.",
+                  body: "From traditional sushi preparation techniques to our curated sake selection, every choice is intentional — an immersive journey to the artistry of Japan.",
+                  image: "/pictures/21-DSC08073.jpg",
+                  alt: "A gold leaf sushi roll revealed from under a glass dome with theatrical smoke.",
+                },
+                {
+                  eyebrow: "Intimacy & Atmosphere",
+                  title: "A room that moves with you.",
+                  body: "Our small, hidden gem of a space offers an intimate atmosphere — perfect for date nights, celebrations, and private gatherings where everyone feels at home.",
+                  image: "/pictures/16-DSC07892.jpg",
+                  alt: "A smoky cocktail under a glass cloche on a wooden board.",
+                },
+              ].map((item) => (
+                <article key={item.title} className="figma-image-card group relative min-h-[34rem] lg:min-h-[50rem]">
                   <Image
-                    src="/pictures/21-DSC08073.jpg"
-                    alt="A gold leaf sushi roll revealed from under a glass dome with a burst of theatrical smoke."
+                    src={item.image}
+                    alt={item.alt}
                     width={1365}
                     height={2048}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
-                </div>
-                <div className="absolute inset-0 z-1 bg-[linear-gradient(180deg,transparent_30%,rgba(0,0,0,0.88)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 z-2 p-7 sm:p-9">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--accent-gold)">
-                    Authenticity & Craft
-                  </p>
-                  <h3 className="mt-2 font-(family-name:--font-display) text-[clamp(1.5rem,3vw,2.25rem)] leading-tight tracking-[-0.02em] text-stone-100">
-                    Every detail reflects precision.
-                  </h3>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-stone-300">
-                    From traditional sushi preparation techniques to our curated sake selection, every choice is intentional — an immersive journey to the artistry of Japan.
-                  </p>
-                </div>
-              </article>
-
-              {/* Intimacy & Atmosphere */}
-              <article className="group relative isolate overflow-hidden rounded-3xl border border-white/10">
-                <div className="aspect-3/4 overflow-hidden sm:aspect-4/5">
-                  <Image
-                    src="/pictures/16-DSC07892.jpg"
-                    alt="A smoky old fashioned cocktail under a glass cloche on a wooden board at Tokyo Club Sushi Speakeasy."
-                    width={1365}
-                    height={2048}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                </div>
-                <div className="absolute inset-0 z-1 bg-[linear-gradient(180deg,transparent_30%,rgba(0,0,0,0.88)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 z-2 p-7 sm:p-9">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--accent-gold)">
-                    Intimacy & Atmosphere
-                  </p>
-                  <h3 className="mt-2 font-(family-name:--font-display) text-[clamp(1.5rem,3vw,2.25rem)] leading-tight tracking-[-0.02em] text-stone-100">
-                    A room that moves with you.
-                  </h3>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-stone-300">
-                    Our small, hidden gem of a space offers an intimate atmosphere — perfect for date nights, celebrations, and private gatherings where everyone feels at home.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* ── Decorative rule ── */}
-      <div className="container-shell">
-        <div className="editorial-rule" />
-      </div>
-
-      {/* ── Creativity & Fun — editorial side-by-side ── */}
-      <Reveal delay={120}>
-        <section className="section-space">
-          <div className="container-shell">
-            <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
-              <div className="order-2 lg:order-1">
-                <div className="gold-frame overflow-hidden rounded-3xl border border-white/12 bg-black/25 p-3">
-                  <div className="overflow-hidden rounded-[1.15rem] border border-white/8">
-                    <Image
-                      src="/pictures/28-DSC08248.jpg"
-                      alt="An ornate damask-wallpapered staircase with a gold handrail leading into Tokyo Club Sushi Speakeasy."
-                      width={1365}
-                      height={2048}
-                      className="aspect-4/5 h-full w-full object-cover"
-                    />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#6e0d20] via-transparent to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6 lg:p-10">
+                    <p className="text-sm font-light uppercase tracking-[0.16em] text-white">{item.eyebrow}</p>
+                    <h3 className="mt-4 font-(family-name:--font-display) text-3xl leading-[1.2] text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 max-w-xl text-base font-light leading-[1.4] tracking-wide text-white/80">
+                      {item.body}
+                    </p>
                   </div>
-                </div>
-              </div>
-
-              <div className="order-1 space-y-6 lg:order-2">
-                <span className="eyebrow">{sectionText("creativityEyebrow")}</span>
-                <h2 className="font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-                  {sectionText("creativityTitle")}
-                </h2>
-                <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  {sectionText("creativityBodyOne")}
-                </p>
-                <p className="text-base leading-[1.85] text-stone-400 sm:text-[1.05rem]">
-                  {sectionText("creativityBodyTwo")}
-                </p>
-                <BookingButton className="btn-secondary mt-2 inline-flex">
-                  Plan Your Night
-                </BookingButton>
-              </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
       </Reveal>
 
-      {/* ── Full-width sushi drama ── */}
-      <Reveal delay={60}>
-        <div className="container-shell">
-          <div className="overflow-hidden rounded-4xl border border-white/8">
-            <Image
-              src="/pictures/24-DSC08132.jpg"
-              alt="Overhead view of gold leaf sushi with ikura caviar and a violet pansy at the center."
-              width={1365}
-              height={2048}
-              className="w-full object-cover"
-              style={{ aspectRatio: "16 / 9" }}
-            />
+      <Reveal delay={140}>
+        <section className="relative overflow-hidden bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <span className="eyebrow">{sectionText("creativityEyebrow")}</span>
+              <h2 className="figma-section-title mt-8 text-white">{sectionText("creativityTitle")}</h2>
+              <p className="mt-5 text-base font-light leading-[1.55] tracking-wide text-white/65">
+                {sectionText("creativityBodyOne")}
+              </p>
+              <p className="mt-5 text-base font-light leading-[1.55] tracking-wide text-white/65">
+                {sectionText("creativityBodyTwo")}
+              </p>
+              <BookingButton className="btn-primary mt-8">Plan Your Night</BookingButton>
+            </div>
+            <div className="figma-image-card aspect-[4/5] lg:aspect-[668/540]">
+              <Image
+                src="/pictures/28-DSC08248.jpg"
+                alt="Damask-wallpapered staircase with a gold handrail inside Tokyo Club."
+                width={1365}
+                height={2048}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
-        </div>
+        </section>
       </Reveal>
 
-      {/* ── Final CTA ── */}
-      <section className="section-space">
-        <div className="container-shell">
-          <div className="editorial-rule mb-14" />
-          <div className="flex flex-col items-center text-center">
-            <span className="eyebrow justify-center">{sectionText("finalEyebrow")}</span>
-            <h2 className="mt-4 font-(family-name:--font-display) text-[clamp(2rem,5vw,3.5rem)] leading-[0.95] tracking-[-0.03em]">
-              {sectionText("finalTitle")}
-            </h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-stone-400">
-              {sectionText("finalDescription")}
-            </p>
-            <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center">
-              <BookingButton className="btn-primary">
-                Book a Table
-              </BookingButton>
-              <a href="/contact" className="btn-secondary">
-                Get in Touch
-              </a>
+      <Reveal delay={160}>
+        <section className="relative overflow-hidden bg-[#0e0204] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <span className="eyebrow">Guest Voices</span>
+                <h2 className="figma-section-title mt-8 text-white">
+                  The Room <span className="italic text-(--accent-red)">Speaks</span> for Itself
+                </h2>
+              </div>
+              <div className="flex gap-3">
+                <button type="button" aria-label="Previous review" className="size-12 border border-(--accent-gold) text-(--accent-gold)">‹</button>
+                <button type="button" aria-label="Next review" className="size-12 bg-(--accent-gold) text-[#170307]">›</button>
+              </div>
             </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-3">
+              {testimonials.map((testimonial) => (
+                <article key={testimonial.author} className="figma-card rounded-xl p-6 lg:p-10">
+                  <div className="flex gap-1 text-(--accent-gold)" aria-label="5 star rating">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <span key={index}>★</span>
+                    ))}
+                  </div>
+                  <p className="mt-5 min-h-28 font-(family-name:--font-display) text-lg italic leading-[1.8] text-white">
+                    {testimonial.quote}
+                  </p>
+                  <p className="mt-10 text-sm font-light uppercase tracking-[0.16em] text-(--accent-gold)">
+                    {testimonial.author}
+                  </p>
+                  <p className="mt-1 text-xs text-white/70">Verified Google Review</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal delay={180}>
+        <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
+          <div className="container-shell">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <span className="eyebrow">Gallery</span>
+                <h2 className="figma-section-title mt-8 text-white">
+                  Inside the <span className="italic text-(--accent-red)">Speakeasy</span>
+                </h2>
+              </div>
+              <Link href="/gallery" className="btn-secondary w-fit">Full Gallery</Link>
+            </div>
+
+            <div className="mt-12 grid auto-rows-[16rem] gap-4 sm:auto-rows-[20rem] lg:grid-cols-3 lg:auto-rows-[20rem]">
+              {gallery.map((asset) => (
+                <div key={asset.src} className={`figma-image-card ${asset.className}`}>
+                  <Image
+                    src={asset.src}
+                    alt={asset.alt}
+                    width={1365}
+                    height={2048}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <section className="relative overflow-hidden bg-[#170307] py-16 text-center">
+        <Image
+          src="/pictures/31.jpg"
+          alt=""
+          width={2048}
+          height={1365}
+          className="absolute inset-0 h-full w-full object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-[#170307]/82" />
+        <div className="container-shell relative">
+          <span className="eyebrow justify-center">{sectionText("finalEyebrow")}</span>
+          <h2 className="figma-section-title mt-6 text-white">{sectionText("finalTitle")}</h2>
+          <p className="mx-auto mt-4 max-w-xl text-base font-light leading-[1.4] tracking-wide text-white/70">
+            {sectionText("finalDescription")}
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <BookingButton className="btn-primary">Book a Table via OpenTable</BookingButton>
+            <a href="tel:+17867289318" className="btn-secondary">(786) 728-9318</a>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

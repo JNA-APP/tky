@@ -11,15 +11,16 @@ import { siteConfig } from "@/lib/site";
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = siteConfig.nav.filter((item) => item.href !== "/blog");
 
   return (
     <div className="fixed inset-x-0 top-0 z-50">
-      <div className="border-b border-white/8 bg-black/45 backdrop-blur-xl">
-        <div className="container-shell flex min-h-10 flex-wrap items-center justify-between gap-x-6 gap-y-2 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-stone-400">
-          <span>South Beach modern Japanese speakeasy</span>
-          <div className="hidden gap-4 md:flex">
+      <div className="border-b border-white/20 bg-black/20 backdrop-blur-xl">
+        <div className="container-shell flex min-h-12 flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm font-light uppercase text-white">
+          <span className="tracking-wide">South Beach modern Japanese speakeasy</span>
+          <div className="hidden gap-6 md:flex">
             <span>1000 Collins Ave</span>
-            <span>{siteConfig.hours}</span>
+            <span>Wed-Mon 5PM-12AM</span>
             <a href={siteConfig.phoneHref} className="hover:text-white">
               {siteConfig.phone}
             </a>
@@ -27,43 +28,43 @@ export function Header() {
         </div>
       </div>
 
-      <header className="border-b border-white/8 bg-[rgba(12,12,14,0.72)] backdrop-blur-xl">
-        <div className="container-shell flex min-h-20 items-center justify-between gap-6">
+      <header className="border-b border-white/20 bg-black/25 backdrop-blur-xl">
+        <div className="container-shell flex min-h-22 items-center justify-between gap-6">
           <Link href="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
             <Image
               src={siteConfig.logo.src}
               alt={`${siteConfig.shortName} logo`}
               width={siteConfig.logo.width}
               height={siteConfig.logo.height}
-              className="h-auto w-36 sm:w-32"
+              className="h-auto w-32 sm:w-44"
               priority
             />
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex">
-            {siteConfig.nav.map((item) => {
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) => {
               const isActive = pathname === item.href;
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm uppercase tracking-[0.22em] ${
+                  className={`relative px-5 py-3 text-sm uppercase ${
                     isActive ? "text-(--accent-gold)" : "text-stone-300 hover:text-white"
                   }`}
                 >
                   {item.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 size-3 -translate-x-1/2 rounded-full bg-(--accent-red)" />
+                  )}
                 </Link>
               );
             })}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a href={siteConfig.phoneHref} className="text-sm text-stone-300 hover:text-white">
-              {siteConfig.phone}
-            </a>
             <BookingButton className="btn-primary">
-              Book a Table
+              Reserve a Table
             </BookingButton>
           </div>
 
@@ -105,11 +106,11 @@ export function Header() {
             <div className="bg-[rgba(11,11,13,0.96)]">
               <div className="container-shell flex flex-col gap-8 py-8">
                 <div className="grid gap-4">
-                  {siteConfig.nav.map((item, i) => (
+                  {navItems.map((item, i) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`text-lg uppercase tracking-[0.18em] text-stone-100 transition-[transform,opacity] ease-out ${
+                      className={`text-lg uppercase text-stone-100 transition-[transform,opacity] ease-out ${
                         menuOpen
                           ? "translate-y-0 opacity-100 duration-400"
                           : "translate-y-0 opacity-0 duration-150"
@@ -133,7 +134,7 @@ export function Header() {
                     {siteConfig.phone}
                   </a>
                   <BookingButton className="btn-primary">
-                    Book a Table
+                    Reserve a Table
                   </BookingButton>
                 </div>
               </div>

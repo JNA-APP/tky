@@ -6,38 +6,36 @@ import type { HomePageContent } from "@/lib/page-content";
 
 export function Hero({ content }: { content: HomePageContent["hero"] }) {
   return (
-    <section className="relative isolate h-dvh overflow-hidden">
+    <section className="relative isolate min-h-[880px] overflow-hidden bg-black/30">
       <div className="absolute inset-0">
-        <video
-          src={content.video}
-          poster={content.poster.src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-40"
+        <Image
+          src={content.poster.src}
+          alt=""
+          width={content.poster.width ?? 1365}
+          height={content.poster.height ?? 2048}
+          priority
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-70"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(166,30,45,0.22),transparent_32%),linear-gradient(180deg,rgba(8,8,9,0.12),rgba(8,8,10,0.68)_48%,rgba(8,8,10,0.96))]" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-(--background)" />
       </div>
 
-      <div className="relative z-10 mx-auto grid h-full w-[min(100%-clamp(2.75rem,6vw,7rem),80rem)] grid-rows-[1fr_auto] pt-(--header-offset) lg:grid-cols-[1fr_0.85fr] lg:gap-10">
+      <div className="relative z-10 mx-auto grid min-h-[880px] w-[min(100%-clamp(2.5rem,5vw,5rem),85rem)] grid-rows-[1fr_auto] pt-(--header-offset)">
         <div className="flex items-center">
-          <div className="hero-stack max-w-2xl space-y-7 py-10 lg:py-0">
-            <span className="eyebrow">{content.eyebrow}</span>
+          <div className="hero-stack max-w-[41rem] space-y-6 pb-16 pt-28 lg:pb-0 lg:pt-14">
+            <span className="eyebrow text-white">{content.eyebrow}</span>
 
-            <h1 className="section-title max-w-xl">
+            <h1 className="max-w-[41rem] font-(family-name:--font-display) text-[clamp(3.2rem,7vw,6.25rem)] leading-[0.98] text-white">
               {content.title}
             </h1>
 
-            <p className="section-copy text-stone-200">
+            <p className="max-w-[41rem] text-base font-light leading-[1.4] tracking-wide text-white/75 sm:text-lg">
               {content.description}
             </p>
 
-            <div className="flex flex-col items-stretch gap-4 pt-1 sm:flex-row sm:items-center lg:items-start">
+            <div className="flex flex-col items-stretch gap-4 pt-4 sm:flex-row sm:items-center">
               <BookingButton className="btn-primary">
-                {content.primaryButtonLabel}
+                Reserve a Table
               </BookingButton>
               <Link href={content.secondaryButton.href} className="btn-secondary">
                 {content.secondaryButton.label}
@@ -46,27 +44,18 @@ export function Hero({ content }: { content: HomePageContent["hero"] }) {
           </div>
         </div>
 
-        <div className="hidden min-h-0 items-center py-4 lg:flex">
-          <div className="gold-frame floating-media max-h-full w-full overflow-hidden rounded-4xl border border-white/12 bg-black/25 p-3.5">
-            <div className="h-full overflow-hidden rounded-[1.4rem] border border-white/10">
-              <Image
-                src={content.sideImage.src}
-                alt={content.sideImage.alt}
-                width={content.sideImage.width ?? 1365}
-                height={content.sideImage.height ?? 2048}
-                priority
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-marquee col-span-full flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/10 py-5 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-stone-300">
-          {content.marquee.map((item, index) => (
-            <span key={item} className={index === 0 ? "text-(--accent-gold)" : undefined}>
-              {item}
-            </span>
-          ))}
+        <div className="hero-marquee mb-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-4 bg-[#5a2609]/80 px-6 py-7 text-sm uppercase text-white backdrop-blur-md lg:mx-10">
+          <span className="font-(family-name:--font-display) text-4xl leading-none">4.8</span>
+          <span className="h-4 w-px bg-white/30" />
+          <span className="tracking-wide">Google Ratings</span>
+          <span className="hidden size-2 rounded-full bg-(--accent-gold) sm:block" />
+          <span className="font-(family-name:--font-display) text-4xl leading-none">200+</span>
+          <span className="h-4 w-px bg-white/30" />
+          <span className="tracking-wide">Verified Reviews</span>
+          <span className="hidden size-2 rounded-full bg-(--accent-gold) sm:block" />
+          <span className="font-(family-name:--font-display) text-4xl leading-none">#1</span>
+          <span className="h-4 w-px bg-white/30" />
+          <span className="tracking-wide">Sushi Speakeasy SoBe</span>
         </div>
       </div>
     </section>

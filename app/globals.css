@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0e0e10;
-  --surface: #17171b;
-  --surface-soft: rgba(23, 23, 27, 0.72);
-  --surface-strong: rgba(14, 14, 16, 0.9);
-  --accent-red: #a61e2d;
-  --accent-red-hover: #c23244;
-  --accent-gold: #c8a46a;
+  --background: #170307;
+  --surface: #26060c;
+  --surface-soft: rgba(47, 7, 14, 0.72);
+  --surface-strong: rgba(23, 3, 7, 0.92);
+  --accent-red: #cf183c;
+  --accent-red-hover: #ef3357;
+  --accent-gold: #ac6e26;
+  --accent-gold-bright: #d38a2c;
   --text-primary: #f5f1ea;
-  --text-muted: #b9b0a3;
-  --border-subtle: rgba(245, 241, 234, 0.12);
+  --text-muted: rgba(255, 255, 255, 0.62);
+  --border-subtle: rgba(255, 255, 255, 0.16);
   --shadow-glow: 0 18px 56px rgba(0, 0, 0, 0.22);
-  --header-offset: 7.5rem;
+  --header-offset: 8.5rem;
 }
 
 html {
@@ -22,9 +23,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(166, 30, 45, 0.14), transparent 26%),
-    radial-gradient(circle at 90% 20%, rgba(200, 164, 106, 0.08), transparent 20%),
-    linear-gradient(180deg, #0e0e10 0%, #0d0d10 48%, #09090b 100%);
+    radial-gradient(circle at 8% 16%, rgba(207, 24, 60, 0.18), transparent 18rem),
+    radial-gradient(circle at 92% 35%, rgba(172, 110, 38, 0.11), transparent 22rem),
+    linear-gradient(180deg, #170307 0%, #120205 48%, #080101 100%);
   color: var(--text-primary);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
@@ -56,8 +57,8 @@ button {
   pointer-events: none;
   content: "";
   background:
-    linear-gradient(to right, rgba(245, 241, 234, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 241, 234, 0.015) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
   background-size: 120px 120px;
   mask-image: radial-gradient(circle at center, black 28%, transparent 82%);
   opacity: 0.18;
@@ -72,8 +73,7 @@ button {
   border-radius: 999px;
   pointer-events: none;
   content: "";
-  background:
-    radial-gradient(circle, rgba(166, 30, 45, 0.22) 0%, rgba(166, 30, 45, 0.08) 34%, transparent 70%);
+  background: radial-gradient(circle, rgba(207, 24, 60, 0.22) 0%, rgba(207, 24, 60, 0.08) 34%, transparent 70%);
   filter: blur(16px);
   opacity: 0.7;
   animation: driftGlow 18s ease-in-out infinite;
@@ -90,7 +90,7 @@ header + .container-shell {
 }
 
 .section-space {
-  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  padding-block: clamp(3.5rem, 7vw, 7.5rem);
 }
 
 .eyebrow {
@@ -119,16 +119,17 @@ header + .container-shell {
 
 .section-title {
   font-family: var(--font-display), serif;
-  font-size: clamp(3rem, 6vw, 4.75rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.35rem, 5vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: 0;
 }
 
 .section-copy {
   max-width: 38rem;
   color: var(--text-muted);
-  font-size: clamp(1rem, 1.8vw, 1.125rem);
-  line-height: 1.75;
+  font-size: clamp(0.98rem, 1.5vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.55;
 }
 
 .panel {
@@ -143,18 +144,20 @@ header + .container-shell {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  padding: 0.95rem 1.5rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+  border-radius: 0;
+  min-height: 3rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-red), var(--accent-red-hover));
+  border: 1px solid var(--accent-gold);
+  background: linear-gradient(180deg, #ac6e26, #7f4916);
   color: var(--text-primary);
-  box-shadow: 0 16px 40px rgba(166, 30, 45, 0.35);
+  box-shadow: 0 16px 40px rgba(172, 110, 38, 0.2);
 }
 
 .btn-primary:hover {
@@ -163,14 +166,44 @@ header + .container-shell {
 }
 
 .btn-secondary {
-  border: 1px solid rgba(200, 164, 106, 0.45);
+  border: 1px solid rgba(172, 110, 38, 0.78);
   background: rgba(255, 255, 255, 0.02);
-  color: var(--text-primary);
+  color: var(--accent-gold-bright);
 }
 
 .btn-secondary:hover {
-  border-color: rgba(200, 164, 106, 0.78);
-  background: rgba(200, 164, 106, 0.08);
+  border-color: rgba(211, 138, 44, 0.95);
+  background: rgba(172, 110, 38, 0.1);
+}
+
+.figma-card {
+  border: 1px solid rgba(207, 24, 60, 0.42);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.figma-image-card {
+  overflow: hidden;
+  border: 1px solid rgba(207, 24, 60, 0.62);
+  border-radius: 8px;
+  background: #0b0103;
+}
+
+.figma-section-title {
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.15rem, 4.5vw, 3rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.figma-stat {
+  border-left: 1px solid var(--accent-gold);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+}
+
+.gold-text {
+  color: var(--accent-gold);
 }
 
 .gold-frame {

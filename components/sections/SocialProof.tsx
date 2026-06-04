@@ -3,37 +3,43 @@ import type { HomePageContent } from "@/lib/page-content";
 
 export function SocialProof({ content }: { content: HomePageContent["socialProof"] }) {
   return (
-    <section className="section-space">
-      <div className="container-shell border-y border-white/8 py-12">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <div className="space-y-4">
-            <span className="eyebrow">{content.eyebrow}</span>
-            <h2 className="section-title max-w-3xl">
-              {content.title}
-            </h2>
-            <p className="section-copy">
-              {content.description}
-            </p>
-          </div>
+    <section className="relative overflow-hidden bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
+      <div className="pointer-events-none absolute -left-24 top-8 size-40 rounded-full border border-(--accent-red)/20" />
+      <div className="pointer-events-none absolute -right-12 top-0 size-40 rounded-full border border-(--accent-red)/20" />
 
-          <div className="grid gap-6">
-            <blockquote className="border-l border-[var(--accent-gold)] pl-6 text-2xl leading-10 text-stone-100 sm:text-3xl sm:leading-[1.5]">
-              &ldquo;{testimonials[0].quote}&rdquo;
-            </blockquote>
-            <p className="text-sm uppercase tracking-[0.24em] text-[var(--accent-gold)]">
-              {testimonials[0].author}
-            </p>
-            <div className="grid gap-4 border-t border-white/8 pt-6 sm:grid-cols-2">
-              {testimonials.slice(1).map((testimonial) => (
-                <article key={testimonial.author}>
-                  <p className="text-base leading-8 text-stone-300">&ldquo;{testimonial.quote}&rdquo;</p>
-                  <p className="mt-4 text-xs uppercase tracking-[0.22em] text-[var(--accent-gold)]">
-                    {testimonial.author}
-                  </p>
-                </article>
-              ))}
-            </div>
+      <div className="container-shell">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-[46rem]">
+            <span className="eyebrow">{content.eyebrow}</span>
+            <h2 className="figma-section-title mt-8 text-white">{content.title}</h2>
           </div>
+          <div className="flex gap-3">
+            <button type="button" aria-label="Previous review" className="size-12 border border-(--accent-gold) text-(--accent-gold)">
+              ‹
+            </button>
+            <button type="button" aria-label="Next review" className="size-12 bg-(--accent-gold) text-[#170307]">
+              ›
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {testimonials.map((testimonial) => (
+            <article key={testimonial.author} className="figma-card p-6">
+              <div className="flex gap-1 text-(--accent-gold)" aria-label="5 star rating">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <span key={index}>★</span>
+                ))}
+              </div>
+              <p className="mt-5 min-h-24 text-base font-light leading-[1.4] tracking-wide text-white/75">
+                “{testimonial.quote}”
+              </p>
+              <div className="mt-10 border-t border-white/10 pt-6">
+                <p className="text-base text-white">{testimonial.author}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/45">Verified Google Review</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
