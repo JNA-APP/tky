@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Manrope } from "next/font/google";
+import { Lora, Outfit } from "next/font/google";
 import Script from "next/script";
 
 import { Footer } from "@/components/layout/Footer";
@@ -12,13 +12,14 @@ const GOOGLE_TAG_ID = "AW-18203197260";
 const META_PIXEL_ID = "226892389948826";
 const GTM_ID = "GTM-TS5THG7K";
 
-const displayFont = Bodoni_Moda({
+const displayFont = Lora({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const bodyFont = Manrope({
+const bodyFont = Outfit({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700", "800"],

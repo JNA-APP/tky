@@ -9,10 +9,10 @@
     "description": "Premium sushi, sculpted cocktails, moody lighting, and a room built for date nights, celebrations, and unforgettable after-dark plans.",
     "video": "/videos/Tokyo%20Video.MOV",
     "poster": {
-      "src": "/pictures/15-japanese-dinner-spread-sushi-bao-dumplings.jpg",
+      "src": "/pictures/home-banner-bg.png",
       "alt": "A cocktail and premium sushi dishes staged on a dramatic black table.",
-      "width": 1365,
-      "height": 2048
+      "width": 1920,
+      "height": 1080
     },
     "sideImage": {
       "src": "/pictures/04-lychee-orchid-and-citrus-cocktails.jpg",
@@ -65,7 +65,7 @@
   "menuPreview": {
     "eyebrow": "Signature menu",
     "title": "Sushi precision, cocktail drama, and late-night share plates.",
-    "description": "Browse categories below, then jump into the full menu when something catches your eye.",
+    "description": "Edomae technique meets South Beach decadence. From clean-cut nigiri to 24K gold-topped signature rolls — every dish is built for the table after dark.",
     "button": {
       "label": "View Full Menu",
       "href": "/menu"

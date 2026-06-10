@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/site";
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const navItems = siteConfig.nav.filter((item) => item.href !== "/blog");
+  const navItems = siteConfig.nav;
 
   return (
     <div className="fixed inset-x-0 top-0 z-50">
@@ -63,7 +63,7 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <BookingButton className="btn-primary">
+            <BookingButton className="btn-secondary">
               Reserve a Table
             </BookingButton>
           </div>
@@ -133,7 +133,7 @@ export function Header() {
                   <a href={siteConfig.phoneHref} className="text-stone-300">
                     {siteConfig.phone}
                   </a>
-                  <BookingButton className="btn-primary">
+                  <BookingButton className="btn-secondary">
                     Reserve a Table
                   </BookingButton>
                 </div>

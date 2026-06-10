@@ -1,13 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CtaSection } from "@/components/sections/CtaSection";
+import { EventOccasions } from "@/components/sections/EventOccasions";
+import { SocialProof } from "@/components/sections/SocialProof";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { BookingButton } from "@/components/ui/ReservationModal";
 import { Reveal } from "@/components/ui/Reveal";
 import { createPageMetadata } from "@/lib/metadata";
 import type { CmsImage } from "@/lib/page-content";
 import { getPageContent } from "@/lib/page-content";
-import { eventOccasions, pageOgImages, testimonials } from "@/lib/site";
+import { pageOgImages } from "@/lib/site";
 
 const pageContent = getPageContent("experience");
 const sections = pageContent.sections ?? {};
@@ -100,13 +103,13 @@ export default function ExperiencePage() {
       <Reveal>
         <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
           <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div className="figma-image-card aspect-[4/3] lg:aspect-[668/468]">
+            <div className="figma-image-card group aspect-[4/3] lg:aspect-[668/468]">
               <Image
                 src={sectionImage("storyImage").src}
                 alt={sectionImage("storyImage").alt}
                 width={sectionImage("storyImage").width ?? 1365}
                 height={sectionImage("storyImage").height ?? 2048}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
               />
             </div>
 
@@ -129,40 +132,7 @@ export default function ExperiencePage() {
       </Reveal>
 
       <Reveal delay={60}>
-        <section className="bg-[#170307] py-[clamp(4rem,8vw,7.5rem)]">
-          <div className="container-shell">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-[48rem]">
-                <span className="eyebrow">Host your night the Tokyo way</span>
-                <h2 className="figma-section-title mt-8 text-white">
-                  Built for celebrations, group plans, and after-dark momentum.
-                </h2>
-              </div>
-              <Link href="/contact" className="btn-secondary w-fit">Plan an Event</Link>
-            </div>
-
-            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-              {eventOccasions.map((occasion, index) => (
-                <article key={occasion.title} className="figma-image-card relative min-h-[25rem]">
-                  <Image
-                    src={eventImages[index]}
-                    alt={occasion.title}
-                    width={1365}
-                    height={2048}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#170307] via-[#170307]/25 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <h3 className="text-2xl font-medium text-white">{occasion.title}</h3>
-                    <p className="mt-3 text-sm font-light leading-[1.4] tracking-wide text-white/70">
-                      {occasion.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <EventOccasions />
       </Reveal>
 
       <Reveal delay={90}>
@@ -248,13 +218,13 @@ export default function ExperiencePage() {
               </p>
               <BookingButton className="btn-primary mt-8">Plan Your Night</BookingButton>
             </div>
-            <div className="figma-image-card aspect-[4/5] lg:aspect-[668/540]">
+            <div className="figma-image-card group aspect-[4/5] lg:aspect-[668/540]">
               <Image
                 src="/pictures/28-DSC08248.jpg"
                 alt="Damask-wallpapered staircase with a gold handrail inside Tokyo Club."
                 width={1365}
                 height={2048}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
               />
             </div>
           </div>
@@ -262,41 +232,7 @@ export default function ExperiencePage() {
       </Reveal>
 
       <Reveal delay={160}>
-        <section className="relative overflow-hidden bg-[#0e0204] py-[clamp(4rem,8vw,7.5rem)]">
-          <div className="container-shell">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <span className="eyebrow">Guest Voices</span>
-                <h2 className="figma-section-title mt-8 text-white">
-                  The Room <span className="italic text-(--accent-red)">Speaks</span> for Itself
-                </h2>
-              </div>
-              <div className="flex gap-3">
-                <button type="button" aria-label="Previous review" className="size-12 border border-(--accent-gold) text-(--accent-gold)">‹</button>
-                <button type="button" aria-label="Next review" className="size-12 bg-(--accent-gold) text-[#170307]">›</button>
-              </div>
-            </div>
-
-            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-              {testimonials.map((testimonial) => (
-                <article key={testimonial.author} className="figma-card rounded-xl p-6 lg:p-10">
-                  <div className="flex gap-1 text-(--accent-gold)" aria-label="5 star rating">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <span key={index}>★</span>
-                    ))}
-                  </div>
-                  <p className="mt-5 min-h-28 font-(family-name:--font-display) text-lg italic leading-[1.8] text-white">
-                    {testimonial.quote}
-                  </p>
-                  <p className="mt-10 text-sm font-light uppercase tracking-[0.16em] text-(--accent-gold)">
-                    {testimonial.author}
-                  </p>
-                  <p className="mt-1 text-xs text-white/70">Verified Google Review</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <SocialProof content={{ eyebrow: "Guest Voices", title: "The Room Speaks for Itself", description: "" }} />
       </Reveal>
 
       <Reveal delay={180}>
@@ -314,13 +250,13 @@ export default function ExperiencePage() {
 
             <div className="mt-12 grid auto-rows-[16rem] gap-4 sm:auto-rows-[20rem] lg:grid-cols-3 lg:auto-rows-[20rem]">
               {gallery.map((asset) => (
-                <div key={asset.src} className={`figma-image-card ${asset.className}`}>
+                <div key={asset.src} className={`figma-image-card group ${asset.className}`}>
                   <Image
                     src={asset.src}
                     alt={asset.alt}
                     width={1365}
                     height={2048}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
                 </div>
               ))}
@@ -329,27 +265,7 @@ export default function ExperiencePage() {
         </section>
       </Reveal>
 
-      <section className="relative overflow-hidden bg-[#170307] py-16 text-center">
-        <Image
-          src="/pictures/31.jpg"
-          alt=""
-          width={2048}
-          height={1365}
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-[#170307]/82" />
-        <div className="container-shell relative">
-          <span className="eyebrow justify-center">{sectionText("finalEyebrow")}</span>
-          <h2 className="figma-section-title mt-6 text-white">{sectionText("finalTitle")}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-base font-light leading-[1.4] tracking-wide text-white/70">
-            {sectionText("finalDescription")}
-          </p>
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <BookingButton className="btn-primary">Book a Table via OpenTable</BookingButton>
-            <a href="tel:+17867289318" className="btn-secondary">(786) 728-9318</a>
-          </div>
-        </div>
-      </section>
+      <CtaSection />
     </>
   );
 }

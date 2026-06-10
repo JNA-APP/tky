@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black pb-8 pt-16">
       <Image
-        src="/pictures/31.jpg"
+        src="/pictures/footer-bg.png"
         alt=""
         width={2048}
         height={1365}
@@ -86,6 +86,10 @@ export function Footer() {
               </div>
               <a href={siteConfig.phoneHref} className="btn-secondary w-fit">
                 {siteConfig.phone}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.4165 10H4.1665" stroke="#d38a2c" strokeWidth="1.25" strokeLinecap="square" strokeLinejoin="round" />
+                  <path d="M10.8335 15L15.8335 10L10.8335 5" stroke="#d38a2c" strokeWidth="1.25" strokeLinejoin="round" />
+                </svg>
               </a>
             </div>
           </div>
